@@ -1,0 +1,47 @@
+
+
+<!-- Search Input Field -->
+<div class="input-field col s2" *ngIf="searchClicked" style="position:fixed; top: 15px; right: 64px;">
+  <input type="text" class="validate" [(ngModel)]="searchString" (input)="searchDynamic()">
+</div>
+<!-- Search Input Icon -->
+<div class="fixed-action-btn" (click)="showSearchBox()" style="top: 15px; right: 24px; max-height:80px;">
+  <a id="menu" class="waves-effect waves-light btn btn-floating" ><i class="material-icons">search</i></a>
+</div>
+<table class="striped highlight">
+        <thead>
+          <tr>
+              <th>File Name</th>
+              <th>File Size</th>
+              <th>Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!--spinner for data loading -->
+          <div id="serviceSpinner" class="preloader-wrapper small active" *ngIf="spinner">
+            <div class="spinner-layer spinner-red-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+                <div class="circle"></div>
+              </div><div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+          <!-- actual content loading -->
+          <tr *ngFor = "let file of files" >
+            <td>{{file.filename | camelCase}}</td>
+            <td>{{file.filesize}} KB</td>
+            <td>
+              <a href="{{file.dlink}}">
+                <i class="material-icons">file_download</i>
+              </a>
+              <a style="color:Red; cursor:pointer;" id="{{file.filename}}" (click)="deleteMe(file.filename)">
+                <i class="material-icons">delete_forever</i>
+              </a>
+            </td>
+          </tr>
+        </tbody>
+</table>
